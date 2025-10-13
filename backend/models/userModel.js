@@ -7,12 +7,12 @@ const userSchema = mongoose.Schema({
     },
     email: {
         type: String,
-        required: [true, 'Enter a email'],
+        required: [true, 'Enter an email'],
         unique: true,
     },
     password: {
         type: String,
-        required: [true, 'Enter a email'],
+        required: [true, 'Enter a password'],
         
     },
     isAdmin: {

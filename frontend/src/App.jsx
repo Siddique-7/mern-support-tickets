@@ -3,7 +3,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Header from "./components/Header";
-import PrivateRoute from "./components/PrivateRoute";
+import PrivateRoute from "./components/privateRoute";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -25,10 +25,22 @@ function App() {
             <Route path="/register" element={<Register />} />
 
             {/* Protected Routes */}
-            <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
-            <Route path="/tickets" element={<PrivateRoute><Tickets /></PrivateRoute>} />
-            <Route path="/ticket/:id" element={<PrivateRoute><Ticket /></PrivateRoute>} />
-            <Route path="/new-ticket" element={<PrivateRoute><NewTicket /></PrivateRoute>} />
+            <Route path="/" element={<PrivateRoute />}>
+              <Route index element={<Home />} />
+            </Route>
+
+            <Route path="/tickets" element={<PrivateRoute />}>
+              <Route index element={<Tickets />} />
+            </Route>
+
+            <Route path="/ticket/:id" element={<PrivateRoute />}>
+              <Route index element={<Ticket />} />
+            </Route>
+
+            <Route path="/new-ticket" element={<PrivateRoute />}>
+              <Route index element={<NewTicket />} />
+            </Route>
+            
           </Routes>
         </div>
       </Router>

@@ -1,29 +1,13 @@
-import express from 'express';
-import protect from '../middleware/authMiddleware.js';
-import {
-  getTickets,
-  createTicket,
-  getTicket,
-  deletTicket,
-  updateTicket,
-} from '../controllers/ticketController.js';
-import noteRouter from './noteRoute.js';
+import express from 'express'
+import  protect  from '../middleware/authMiddleware.js'
+import { getNotes, addNotes } from '../controllers/noteController.js'
 
-const ticketRouter = express.Router();
+// till reach here url  is /api/tickets/:ticketId
+const noteRouter = express.Router({ mergeParams: true })
 
-// Nested route for notes
-ticketRouter.use('/:id/notes', noteRouter);
+noteRouter.route('/')
+  .get(protect, getNotes)
+  .post(protect, addNotes)
+// url will be /api/tickets/:ticketId/notes
 
-// Ticket routes
-ticketRouter
-  .route('/')
-  .get(protect, getTickets)
-  .post(protect, createTicket);
-
-ticketRouter
-  .route('/:id')
-  .get(protect, getTicket)
-  .delete(protect, deletTicket)
-  .put(protect, updateTicket);
-
-export default ticketRouter;
+export default noteRouter

@@ -4,7 +4,7 @@ import {
   getTickets,
   createTicket,
   getTicket,
-  deletTicket,
+  deleteTicket,
   updateTicket,
 } from '../controllers/ticketController.js';
 import noteRouter from './noteRoute.js';
@@ -23,7 +23,7 @@ ticketRouter
 ticketRouter
   .route('/:id')
   .get(protect, getTicket)
-  .delete(protect, deletTicket)
+  .delete(protect, deleteTicket)
   .put(protect, updateTicket);
 
 export default ticketRouter;

@@ -4,10 +4,10 @@ import axios from 'axios'
 // const API_URL = '/api/users'
 
 
-const API_URL = 'https://support-desk-app-gyct.onrender.com/api/users'
+const API_URL = `${import.meta.env.VITE_API_BASE_URL}/api/users`
 
 const register = async (user) => {
-    const response = await axios.post(API_URL, user)
+    const response = await axios.post(`${API_URL}/register`, user)
 
     if(response.data) {
         localStorage.setItem('user', JSON.stringify(response.data))

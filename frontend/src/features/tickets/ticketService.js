@@ -4,7 +4,7 @@ import axios from "axios";
 // "proxy": "https://support-desk-app-gyct.onrender.com/",
 // const API_URL = '/api/tickets'
 
-const API_URL = "https://support-desk-app-gyct.onrender.com/api/tickets";
+const API_URL = `${import.meta.env.VITE_API_BASE_URL}/api/tickets`
 
 const createTicket = async (ticket, token) => {
   const config = {

@@ -1,6 +1,6 @@
 import asyncHandler from 'express-async-handler'
-import User from './models/userModel.js'
-import Ticket from './models/ticketModel.js'
+import User from '../models/userModel.js'
+import Ticket from '../models/ticketModel.js'
 
 
 const getTickets = asyncHandler(async (req, res) => {

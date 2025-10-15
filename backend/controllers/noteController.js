@@ -1,7 +1,7 @@
 import asyncHandler from 'express-async-handler'
-import Note from './models/noteModel.js'
-import Ticket from './models/ticketModel.js'
-import User from './models/userModel.js'
+import Note from '../models/noteModel.js'
+import Ticket from '../models/ticketModel.js'
+import User from '../models/userModel.js'
 
 
 const getNotes = asyncHandler ( async (req, res) => {

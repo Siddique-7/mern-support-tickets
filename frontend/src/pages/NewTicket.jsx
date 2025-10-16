@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { createTicket, reset } from "../features/tickets/ticketSlice";
-import Spinner from '../components/Spinner';
-import BackButton from "../components/BackButton";
+import { createTicket, reset } from "../features/tickets/ticketSlice.js";
+import Spinner from '../components/spinner.jsx';
+import BackButton from "../components/BackButton.jsx";
 
 function NewTicket() {
   const { user } = useSelector((state) => state.auth);

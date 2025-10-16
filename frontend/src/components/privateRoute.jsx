@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuthStatus } from "../hooks/useAuthStatus";
+import { useAuthStatus } from "../hooks/useAuthStatus.js";
 
 const PrivateRoute = () => {
   const { loggedIn } = useAuthStatus();

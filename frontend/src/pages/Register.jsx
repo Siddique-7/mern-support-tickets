@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
-import { register, authSlice } from '../features/auth/authSlice';
-import Spinner from "../components/Spinner";
+import { register, authSlice } from '../features/auth/authSlice.js';
+import Spinner from "../components/spinner.jsx";
 
 function Register() {
   const [formData, setFormData] = useState({

@@ -2,12 +2,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import Modal from 'react-modal';
-import { getTicket, closeTicket } from '../features/tickets/ticketSlice';
+import { getTicket, closeTicket } from '../features/tickets/ticketSlice.js';
 import { toast } from "react-toastify";
-import Spinner from "../components/Spinner";
-import BackButton from "../components/BackButton";
-import { addNote, getNotes } from "../features/notes/noteSlice";
-import NoteItem from "../components/NoteItem";
+import Spinner from "../components/spinner.jsx";
+import BackButton from "../components/BackButton.jsx";
+import { addNote, getNotes } from "../features/notes/noteSlice.js";
+import NoteItem from "../components/noteItem.jsx";
 import { FaPlus } from "react-icons/fa";
 
 Modal.setAppElement('#root');

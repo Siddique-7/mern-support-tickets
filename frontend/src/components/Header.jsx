@@ -1,7 +1,7 @@
 import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { logout, reset } from "../features/auth/authSlice";
+import { logout, reset } from "../features/auth/authSlice.js";
 
 function Header() {
   const user = useSelector((state) => state.auth.user) || JSON.parse(localStorage.getItem("user"));

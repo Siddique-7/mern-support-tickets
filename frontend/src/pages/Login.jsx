@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { FaUser } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { login } from '../features/auth/authSlice';
+import { login } from '../features/auth/authSlice.js';
 import { useSelector, useDispatch } from 'react-redux';
-import { authSlice } from '../features/auth/authSlice';
+import { authSlice } from '../features/auth/authSlice.js';
 import { useNavigate } from "react-router-dom";
-import Spinner from "../components/spinner";
+import Spinner from "../components/spinner.jsx";
 
 function Login() {
   const [formData, setFormData] = useState({

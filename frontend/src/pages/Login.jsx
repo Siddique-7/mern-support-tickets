@@ -5,7 +5,7 @@ import { login } from '../features/auth/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { authSlice } from '../features/auth/authSlice';
 import { useNavigate } from "react-router-dom";
-import Spinner from "../components/Spinner";
+import Spinner from "../components/spinner";
 
 function Login() {
   const [formData, setFormData] = useState({

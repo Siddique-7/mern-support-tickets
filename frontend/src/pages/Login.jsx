@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { FaUser } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { login } from '../features/auth/authSlice.js';
-import { useSelector, useDispatch } from 'react-redux';
-import { authSlice } from '../features/auth/authSlice.js';
+import { login } from "../features/auth/authSlice.js";
+import { useSelector, useDispatch } from "react-redux";
+import { authSlice } from "../features/auth/authSlice.js";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../components/spinner.jsx";
 
@@ -14,13 +14,15 @@ function Login() {
   });
 
   const { email, password } = formData;
-  const { user, isError, isLoading, isSuccess, message } = useSelector(state => state.auth);
+  const { user, isError, isLoading, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (isError) toast(message);
-    if (user || isSuccess) navigate('/');
+    if (user || isSuccess) navigate("/");
     dispatch(authSlice.actions.reset());
   }, [isError, isSuccess, user, message, navigate, dispatch]);
 
@@ -47,7 +49,10 @@ function Login() {
         <p className="text-gray-600">Please Login</p>
       </div>
 
-      <form onSubmit={onSubmit} className="w-full max-w-sm bg-white p-6 rounded-lg shadow-md">
+      <form
+        onSubmit={onSubmit}
+        className="w-full max-w-sm bg-white p-6 rounded-lg shadow-md"
+      >
         <div className="mb-4">
           <input
             type="email"

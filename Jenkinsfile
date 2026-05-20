@@ -69,6 +69,28 @@ pipeline {
     }
 }
 
+stage('Deploy to EC2') {
+    steps {
+        sshagent(['ec2-ssh-key']) {
+            sh '''
+            scp -o StrictHostKeyChecking=no docker-compose.yml ubuntu@EC2_IP:/home/ubuntu/
+
+            ssh -o StrictHostKeyChecking=no ubuntu@EC2_IP << 'EOF'
+
+                docker pull USER/mern-support-tickets-backend:latest
+                docker pull USER/mern-support-tickets-frontend:latest
+
+                cd /home/ubuntu
+
+                docker compose down || true
+                docker compose up -d
+
+            EOF
+            '''
+        }
+    }
+}
+
     }
 
     post {

@@ -1,18 +1,16 @@
 services:
   backend:
-    build:
-      context: ./backend
+    image: YOUR_DOCKERHUB_USER/mern-support-tickets-backend:latest
     container_name: support-backend
     ports:
       - "5000:5000"
     env_file:
-      - ./backend/.env
+      - ./backend.env
 
   frontend:
-    build:
-      context: ./frontend
+    image: YOUR_DOCKERHUB_USER/mern-support-tickets-frontend:latest
     container_name: support-frontend
     ports:
-      - "3000:80"
+      - "80:80"
     depends_on:
       - backend

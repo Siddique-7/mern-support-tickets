@@ -45,6 +45,29 @@ pipeline {
              sh 'docker build -t mern-frontend ./frontend'
            }
         }
+    
+    stage('Push to Docker Hub') {
+    steps {
+        script {
+            withCredentials([usernamePassword(
+                credentialsId: 'dockerhub-creds',
+                usernameVariable: 'USER',
+                passwordVariable: 'PASS'
+            )]) {
+
+                sh '''
+                    echo $PASS | docker login -u $USER --password-stdin
+
+                    docker tag mern-backend $USER/mern-support-tickets-backend:latest
+                    docker tag mern-frontend $USER/mern-support-tickets-frontend:latest
+
+                    docker push $USER/mern-support-tickets-backend:latest
+                    docker push $USER/mern-support-tickets-frontend:latest
+                '''
+            }
+        }
+    }
+}
 
     }
 

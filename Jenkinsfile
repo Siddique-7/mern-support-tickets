@@ -31,13 +31,18 @@ pipeline {
             }
         }
 
-        stage('Build Frontend') {
-            steps {
-                dir('frontend') {
-                    sh 'npm run build'
-                }
+     stage('Build Frontend') {
+      steps {
+        withCredentials([string(credentialsId: 'vite-api-url', variable: 'VITE_API_BASE_URL')]) {
+            dir('frontend') {
+                sh '''
+                npm install --legacy-peer-deps
+                VITE_API_BASE_URL=$VITE_API_BASE_URL npm run build
+                '''
             }
         }
+     }
+  }
 
         stage('Build Docker Images') {
             steps {

@@ -39,6 +39,13 @@ pipeline {
             }
         }
 
+        stage('Build Docker Images') {
+           steps {
+             sh 'docker build -t mern-backend ./backend'
+             sh 'docker build -t mern-frontend ./frontend'
+           }
+        }
+
     }
 
     post {

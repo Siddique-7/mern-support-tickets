@@ -1,11 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        EC2_HOST = "13.127.45.53"
-        DOCKER_USER = "siddique7"
-    }
-
     stages {
 
         stage('Clean Workspace') {
@@ -77,13 +72,13 @@ pipeline {
         stage('Deploy to EC2') {
             steps {
                 sshagent(['ec2-ssh-key']) {
-                    sh '''
-                    scp -o StrictHostKeyChecking=no docker-compose.yml ubuntu@${EC2_HOST}:/home/ubuntu/
+                    sh """
+                    scp -o StrictHostKeyChecking=no docker-compose.yml ubuntu@13.127.45.53:/home/ubuntu/
 
-                    ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} << EOF
+                    ssh -o StrictHostKeyChecking=no ubuntu@13.127.45.53 << EOF
 
-                        docker pull ${DOCKER_USER}/mern-support-tickets-backend:latest
-                        docker pull ${DOCKER_USER}/mern-support-tickets-frontend:latest
+                        docker pull siddique7/mern-support-tickets-backend:latest
+                        docker pull siddique7/mern-support-tickets-frontend:latest
 
                         cd /home/ubuntu
 
@@ -91,7 +86,7 @@ pipeline {
                         docker compose up -d
 
                     EOF
-                    '''
+                    """
                 }
             }
         }

@@ -1,11 +1,13 @@
 pipeline {
     agent any
 
-    environment {
-        NODE_ENV = 'production'
-    }
-
     stages {
+
+        stage('Clean Workspace') {
+            steps {
+                deleteDir()
+            }
+        }
 
         stage('Checkout') {
             steps {
@@ -16,7 +18,7 @@ pipeline {
         stage('Install Backend Dependencies') {
             steps {
                 dir('backend') {
-                    sh 'npm install'
+                    sh 'npm install --legacy-peer-deps'
                 }
             }
         }
@@ -24,7 +26,7 @@ pipeline {
         stage('Install Frontend Dependencies') {
             steps {
                 dir('frontend') {
-                    sh 'npm install'
+                    sh 'npm install --legacy-peer-deps'
                 }
             }
         }
@@ -37,13 +39,6 @@ pipeline {
             }
         }
 
-        stage('Backend Test (optional)') {
-            steps {
-                dir('backend') {
-                    sh 'echo "No tests yet - add later"'
-                }
-            }
-        }
     }
 
     post {

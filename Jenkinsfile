@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    environment {
+        EC2_HOST = "13.127.45.53"
+        DOCKER_USER = "siddique7"
+    }
+
     stages {
 
         stage('Clean Workspace') {
@@ -40,57 +45,56 @@ pipeline {
         }
 
         stage('Build Docker Images') {
-           steps {
-             sh 'docker build -t mern-backend ./backend'
-             sh 'docker build -t mern-frontend ./frontend'
-           }
-        }
-    
-    stage('Push to Docker Hub') {
-    steps {
-        script {
-            withCredentials([usernamePassword(
-                credentialsId: 'dockerhub-creds',
-                usernameVariable: 'USER',
-                passwordVariable: 'PASS'
-            )]) {
-
-                sh '''
-                    echo $PASS | docker login -u $USER --password-stdin
-
-                    docker tag mern-backend $USER/mern-support-tickets-backend:latest
-                    docker tag mern-frontend $USER/mern-support-tickets-frontend:latest
-
-                    docker push $USER/mern-support-tickets-backend:latest
-                    docker push $USER/mern-support-tickets-frontend:latest
-                '''
+            steps {
+                sh 'docker build -t mern-backend ./backend'
+                sh 'docker build -t mern-frontend ./frontend'
             }
         }
-    }
-}
 
-stage('Deploy to EC2') {
-    steps {
-        sshagent(['ec2-ssh-key']) {
-            sh '''
-            scp -o StrictHostKeyChecking=no docker-compose.yml ubuntu@EC2_IP:/home/ubuntu/
+        stage('Push to Docker Hub') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(
+                        credentialsId: 'dockerhub-creds',
+                        usernameVariable: 'USER',
+                        passwordVariable: 'PASS'
+                    )]) {
 
-            ssh -o StrictHostKeyChecking=no ubuntu@EC2_IP << 'EOF'
+                        sh '''
+                            echo $PASS | docker login -u $USER --password-stdin
 
-                docker pull USER/mern-support-tickets-backend:latest
-                docker pull USER/mern-support-tickets-frontend:latest
+                            docker tag mern-backend $USER/mern-support-tickets-backend:latest
+                            docker tag mern-frontend $USER/mern-support-tickets-frontend:latest
 
-                cd /home/ubuntu
-
-                docker compose down || true
-                docker compose up -d
-
-            EOF
-            '''
+                            docker push $USER/mern-support-tickets-backend:latest
+                            docker push $USER/mern-support-tickets-frontend:latest
+                        '''
+                    }
+                }
+            }
         }
-    }
-}
 
+        stage('Deploy to EC2') {
+            steps {
+                sshagent(['ec2-ssh-key']) {
+                    sh '''
+                    scp -o StrictHostKeyChecking=no docker-compose.yml ubuntu@${EC2_HOST}:/home/ubuntu/
+
+                    ssh -o StrictHostKeyChecking=no ubuntu@${EC2_HOST} << EOF
+
+                        docker pull ${DOCKER_USER}/mern-support-tickets-backend:latest
+                        docker pull ${DOCKER_USER}/mern-support-tickets-frontend:latest
+
+                        cd /home/ubuntu
+
+                        docker compose down || true
+                        docker compose up -d
+
+                    EOF
+                    '''
+                }
+            }
+        }
     }
 
     post {
